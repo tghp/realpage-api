@@ -2,6 +2,8 @@
 
 namespace TGHP\RealpageClient\Service;
 
+use TGHP\RealpageClient\Util;
+
 class PricingAndAvailability extends AbstractService
 {
 
@@ -108,7 +110,7 @@ class PricingAndAvailability extends AbstractService
             $args['listCriteria'] = [
                 'ListCriterion' => [
                     'name' => $criterionName,
-                    'singlevalue' => $criterionValue
+                    'singlevalue' => Util::formatCriterionValue($criterionValue)
                 ]
             ];
         }
@@ -152,7 +154,7 @@ class PricingAndAvailability extends AbstractService
                 ];
 
                 if(!is_array($value) || count($value) === 1) {
-                    $criterion['singlevalue'] = $value;
+                    $criterion['singlevalue'] = Util::formatCriterionValue($value);
                 } else if (count($value) === 2) {
                     $criterion['minvalue'] = $value[0];
                     $criterion['maxvalue'] = $value[1];
