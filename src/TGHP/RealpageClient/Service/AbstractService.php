@@ -76,11 +76,6 @@ abstract class AbstractService
             }
         }
 
-//        if($function === 'getunitlist') {
-//            var_dump($this->soapClient->__getLastRequest());
-//            var_dump($this->soapClient->__getLastResponse());
-//        }
-
         return $response;
     }
 
