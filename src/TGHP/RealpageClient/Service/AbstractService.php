@@ -16,6 +16,9 @@ abstract class AbstractService
     /** @var SoapClient */
     protected $soapClient;
 
+    protected $outputRequests = false;
+    protected $outputResponses = false;
+
     public function __construct($serviceUrl)
     {
         $soapOpts = ['trace' => 1, 'exceptions' => true];
@@ -46,6 +49,22 @@ abstract class AbstractService
 
         try {
             $response = $this->soapClient->__soapCall($function, (array) $soapArguments);
+
+            if ($this->outputRequests) {
+                echo "[REQUEST]" . PHP_EOL;
+                echo trim($this->soapClient->__getLastRequestHeaders()) . PHP_EOL;
+                echo '---' . PHP_EOL;
+                echo trim($this->soapClient->__getLastRequest()) . PHP_EOL;
+                echo "[END REQUEST]" . PHP_EOL;
+            }
+
+            if ($this->outputResponses) {
+                echo "[RESPONSE]" . PHP_EOL;
+                echo trim($this->soapClient->__getLastResponseHeaders()) . PHP_EOL;
+                echo '---' . PHP_EOL;
+                echo trim($this->soapClient->__getLastResponse()) . PHP_EOL;
+                echo "[END RESPONSE]" . PHP_EOL;
+            }
 
             $xml = $response->$responseKey->any;
 
@@ -82,6 +101,26 @@ abstract class AbstractService
     protected function getElementMap()
     {
         return [];
+    }
+
+    /**
+     * @param $output
+     * @return $this
+     */
+    public function setOutputRequests($output)
+    {
+        $this->outputRequests = $output;
+        return $this;
+    }
+
+    /**
+     * @param $output
+     * @return $this
+     */
+    public function setOutputResponses($output)
+    {
+        $this->outputResponses = $output;
+        return $this;
     }
 
 }
