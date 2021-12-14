@@ -2,6 +2,7 @@
   "name": "tghp/realpage-api",
   "type": "library",
   "description": "A PHP client for the RealPage SOAP API",
+  "version": "1.1.0",
   "keywords": [
     "realpage",
     "web services"
